@@ -1,1 +1,56 @@
-console.log('hello!')
+window.addEventListener('load', function () {
+  const canvas_id = 'canvas';
+  var canvas = document.getElementById(canvas_id);
+  var context = canvas.getContext('2d');
+  console.log(context);
+  var counter = 0;
+  var click = 0;
+  //共通変数宣言
+  var cnvColor = 'rgba(0,0,0,1)'; //線の色
+  var cnvBold = '1'; //線の太さ
+
+  function get(e) {
+    return document.getElementById(e);
+  }
+  //canvas上でのイベント(canvas1)
+  get(canvas_id).addEventListener('mousedown', function () {
+    // マウス押下
+    click = 1;
+    console.log('mouese down ' + click);
+  });
+  get(canvas_id).addEventListener('mouseup', function () {
+    // マウス押下終了
+    click = 0;
+    console.log('mouese up ' + click);
+  });
+  get(canvas_id).addEventListener('mousemove', function (e) {
+    // マウス移動
+    counter++;
+    console.log('mouese move ' + counter + ' ' + click);
+    if (!click) return false;
+    var rect = e.target.getBoundingClientRect();
+    x = e.clientX - rect.left;
+    y = e.clientY - rect.top;
+    draw(x, y);
+  });
+  get(canvas_id).addEventListener('mouseleave', function () {
+    // マウス外遷移
+    click = 0;
+    console.log('mouese leave ' + click);
+  });
+  //描画処理
+  function draw(x, y) {
+    context.lineWidth = cnvBold;
+    context.strokeStyle = cnvColor;
+    // 初回処理の判定
+    if (click == '1') {
+      click = '2';
+      context.beginPath();
+      context.lineCap = 'round'; //　線を角丸にする
+      context.moveTo(x, y);
+    } else {
+      context.lineTo(x, y);
+    }
+    context.stroke();
+  }
+});

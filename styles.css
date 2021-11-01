@@ -1,3 +1,15 @@
 body {
-  background: orange;
+  background: rgb(145, 231, 255);
+  background: linear-gradient(
+    90deg,
+    rgba(145, 231, 255, 1) 8%,
+    rgba(255, 204, 73, 1) 54%,
+    rgba(0, 212, 255, 1) 100%
+  );
+}
+canvas {
+  background-color: white;
+  border: 1px solid;
+  height: 60%;
+  width: 90%;
 }
