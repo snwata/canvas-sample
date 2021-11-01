@@ -38,6 +38,30 @@ window.addEventListener('load', function () {
     click = 0;
     console.log('mouese leave ' + click);
   });
+  get('pen').addEventListener('click', function () {
+    // ペン
+    context.globalCompositeOperation = 'source-over';
+  });
+  get('eraser').addEventListener('click', function () {
+    // 消しゴム
+    context.globalCompositeOperation = 'destination-out';
+  });
+  get('black').addEventListener('click', function () {
+    // 黒色
+    changeColor('rgba(0,0,0,1)');
+    get('nowColor').innerHTML = '黒';
+  });
+  get('red').addEventListener('click', function () {
+    // 赤色
+    changeColor('rgba(255,0,0,1)');
+    get('nowColor').innerHTML = '赤';
+  });
+  get('blue').addEventListener('click', function () {
+    // 青色
+    changeColor('rgba(0,0,255,1)');
+    get('nowColor').innerHTML = '青';
+  });
+
   //描画処理
   function draw(x, y) {
     context.lineWidth = cnvBold;
@@ -52,5 +76,9 @@ window.addEventListener('load', function () {
       context.lineTo(x, y);
     }
     context.stroke();
+  }
+  // 色変更
+  function changeColor(newColor) {
+    cnvColor = newColor;
   }
 });

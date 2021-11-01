@@ -10,6 +10,4 @@ body {
 canvas {
   background-color: white;
   border: 1px solid;
-  height: 60%;
-  width: 90%;
 }
