@@ -9,6 +9,20 @@ window.addEventListener('load', function () {
   var cnvColor = 'rgba(0,0,0,1)'; //線の色
   var cnvBold = '1'; //線の太さ
 
+  const image = new Image();
+  image.src = './nurie.png';
+  console.log(image);
+  // image.onload = function () {
+
+  // };
+  image.addEventListener(
+    'load',
+    function () {
+      context.drawImage(image, 0, 0);
+    },
+    false
+  );
+
   function get(e) {
     return document.getElementById(e);
   }
