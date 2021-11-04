@@ -10,15 +10,13 @@ window.addEventListener('load', function () {
   var cnvBold = '1'; //線の太さ
 
   const image = new Image();
+  // image.src =
+  //   'https://images.unsplash.com/photo-1515513284006-9a59075694b7?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80';
   image.src = './nurie.png';
-  console.log(image);
-  // image.onload = function () {
-
-  // };
   image.addEventListener(
     'load',
     function () {
-      context.drawImage(image, 0, 0);
+      context.drawImage(image, 0, 0, 500, 300);
     },
     false
   );
