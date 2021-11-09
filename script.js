@@ -46,6 +46,7 @@ window.addEventListener('load', function () {
   });
   get(canvas_id).addEventListener('touchmove', function (e) {
     // マウス移動
+    e.preventDefault(); // 画面スクロールを防止
     counter++;
     console.log('mouese move ' + counter + ' ' + click);
     if (!click) return false;
