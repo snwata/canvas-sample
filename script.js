@@ -19,12 +19,32 @@ window.addEventListener('load', function () {
     click = 1;
     console.log('mouese down ' + click);
   });
+  get(canvas_id).addEventListener('touchstart', function () {
+    // マウス押下
+    click = 1;
+    console.log('mouese down ' + click);
+  });
   get(canvas_id).addEventListener('mouseup', function () {
     // マウス押下終了
     click = 0;
     console.log('mouese up ' + click);
   });
+  get(canvas_id).addEventListener('touchend', function () {
+    // マウス押下終了
+    click = 0;
+    console.log('mouese up ' + click);
+  });
   get(canvas_id).addEventListener('mousemove', function (e) {
+    // マウス移動
+    counter++;
+    console.log('mouese move ' + counter + ' ' + click);
+    if (!click) return false;
+    var rect = e.target.getBoundingClientRect();
+    x = e.clientX - rect.left;
+    y = e.clientY - rect.top;
+    draw(x, y);
+  });
+  get(canvas_id).addEventListener('touchmove', function (e) {
     // マウス移動
     counter++;
     console.log('mouese move ' + counter + ' ' + click);
