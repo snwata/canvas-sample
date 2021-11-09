@@ -1,0 +1,27 @@
+body {
+  background: rgb(145, 231, 255);
+  background: linear-gradient(
+    90deg,
+    rgba(145, 231, 255, 1) 8%,
+    rgba(255, 204, 73, 1) 54%,
+    rgba(0, 212, 255, 1) 100%
+  );
+}
+.canvas-wrap {
+  height: 300px;
+  width: 500px;
+  position: relative;
+  border: 1px solid;
+}
+.canvas-wrap > canvas {
+  position: absolute;
+}
+#canvas_base {
+  z-index: 1;
+}
+#canvas_nurie {
+  z-index: 2;
+}
+#canvas_result {
+  border: 1px solid;
+}

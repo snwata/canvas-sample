@@ -1,25 +1,14 @@
 window.addEventListener('load', function () {
-  const canvas_id = 'canvas';
+  const canvas_id = 'canvas_nurie';
   var canvas = document.getElementById(canvas_id);
   var context = canvas.getContext('2d');
-  console.log(context);
   var counter = 0;
   var click = 0;
   //共通変数宣言
   var cnvColor = 'rgba(0,0,0,1)'; //線の色
   var cnvBold = '1'; //線の太さ
 
-  const image = new Image();
-  // image.src =
-  //   'https://images.unsplash.com/photo-1515513284006-9a59075694b7?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80';
-  image.src = './nurie.png';
-  image.addEventListener(
-    'load',
-    function () {
-      context.drawImage(image, 0, 0, 500, 300);
-    },
-    false
-  );
+  setBg();
 
   function get(e) {
     return document.getElementById(e);
@@ -53,10 +42,12 @@ window.addEventListener('load', function () {
   get('pen').addEventListener('click', function () {
     // ペン
     context.globalCompositeOperation = 'source-over';
+    get('nowTool').innerHTML = 'ペン';
   });
   get('eraser').addEventListener('click', function () {
     // 消しゴム
     context.globalCompositeOperation = 'destination-out';
+    get('nowTool').innerHTML = '消しゴム';
   });
   get('black').addEventListener('click', function () {
     // 黒色
@@ -72,6 +63,17 @@ window.addEventListener('load', function () {
     // 青色
     changeColor('rgba(0,0,255,1)');
     get('nowColor').innerHTML = '青';
+  });
+  get('clear').addEventListener('click', function () {
+    // 青色
+    clearCanvas(get('canvas_nurie'));
+  });
+  get('marge').addEventListener('click', function () {
+    // 青色
+    var canvas = document.getElementById('canvas_result');
+    clearCanvas(canvas);
+    context.drawImage(canvasToImage(get('canvas_base')), 0, 0);
+    context.drawImage(canvasToImage(get('canvas_nurie')), 0, 0);
   });
 
   //描画処理
@@ -92,5 +94,35 @@ window.addEventListener('load', function () {
   // 色変更
   function changeColor(newColor) {
     cnvColor = newColor;
+  }
+  // 台紙
+  function setBg() {
+    const canvas_id = 'canvas_base';
+    var canvas = document.getElementById(canvas_id);
+    var context = canvas.getContext('2d');
+
+    const image = new Image();
+    image.src =
+      'https://images.unsplash.com/photo-1515513284006-9a59075694b7?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80';
+    // image.src = './nurie.png';
+    image.addEventListener(
+      'load',
+      function () {
+        context.drawImage(image, 0, 0, 500, 300);
+      },
+      false
+    );
+  }
+  // キャンバスをクリア
+  function clearCanvas(canvas) {
+    var context = canvas.getContext('2d');
+    context.clearRect(0, 0, canvas.width, canvas.height);
+  }
+  // キャンバスをクリア
+  function canvasToImage(canvas) {
+    const image = new Image();
+    image.crossOrigin = 'anonymous';
+    image.src = canvas.toDataURL();
+    return image;
   }
 });
