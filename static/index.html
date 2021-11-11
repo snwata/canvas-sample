@@ -1,0 +1,35 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <script src="script.js"></script>
+    <link rel="stylesheet" type="text/css" href="styles.css" />
+  </head>
+  <body>
+    <h1>塗り絵！</h1>
+    <div class="canvas-wrap">
+      <canvas id="canvas_base" height="300px" width="500px"></canvas>
+      <canvas id="canvas_nurie" height="300px" width="500px"></canvas>
+    </div>
+    <div style="margin: 10px">
+      <label id="nowTool">ペン</label>
+      <button id="pen">ペン</button>
+      <button id="eraser">消しゴム</button>
+    </div>
+    <div style="margin: 10px">
+      <label id="nowColor">黒</label>
+      <button id="black">黒</button>
+      <button id="red">赤</button>
+      <button id="blue">青</button>
+    </div>
+    <button id="clear">クリア</button>
+    <div style="margin-top: 50px">
+      <button id="marge">合成</button><br />
+      <canvas
+        id="canvas_result"
+        height="300px"
+        width="500px"
+        style="margin-top: 5px"
+      ></canvas>
+    </div>
+  </body>
+</html>
