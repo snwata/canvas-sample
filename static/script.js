@@ -1,14 +1,14 @@
 window.addEventListener('load', function () {
-  const canvas_id = 'canvas_nurie';
-  var canvas = document.getElementById(canvas_id);
-  var context = canvas.getContext('2d');
-  var counter = 0;
-  var click = 0;
+  const canvas_id = 'canvas-wrap';
+  const context = get('canvas_nurie').getContext('2d');
+  let counter = 0;
+  let click = 0;
   //共通変数宣言
-  var cnvColor = 'rgba(0,0,0,1)'; //線の色
-  var cnvBold = '1'; //線の太さ
+  let cnvColor = 'rgba(255,0,0,1)'; //線の色
+  let cnvBold = '1'; //線の太さ
 
   setBg();
+  setOverlay();
 
   function get(e) {
     return document.getElementById(e);
@@ -17,29 +17,29 @@ window.addEventListener('load', function () {
   get(canvas_id).addEventListener('mousedown', function () {
     // マウス押下
     click = 1;
-    console.log('mouese down ' + click);
+    outputLog('mouese down ' + click);
   });
   get(canvas_id).addEventListener('touchstart', function () {
     // マウス押下
     click = 1;
-    console.log('mouese down ' + click);
+    outputLog('touch start ' + click);
   });
   get(canvas_id).addEventListener('mouseup', function () {
     // マウス押下終了
     click = 0;
-    console.log('mouese up ' + click);
+    outputLog('mouese up ' + click);
   });
   get(canvas_id).addEventListener('touchend', function () {
     // マウス押下終了
     click = 0;
-    console.log('mouese up ' + click);
+    outputLog('touch end ' + click);
   });
   get(canvas_id).addEventListener('mousemove', function (e) {
     // マウス移動
     counter++;
-    console.log('mouese move ' + counter + ' ' + click);
+    // outputLog('mouese move ' + counter + ' ' + click);
     if (!click) return false;
-    var rect = e.target.getBoundingClientRect();
+    let rect = e.target.getBoundingClientRect();
     x = e.clientX - rect.left;
     y = e.clientY - rect.top;
     draw(x, y);
@@ -48,9 +48,9 @@ window.addEventListener('load', function () {
     // マウス移動
     e.preventDefault(); // 画面スクロールを防止
     counter++;
-    console.log('mouese move ' + counter + ' ' + click);
+    // outputLog('touch move ' + counter + ' ' + click);
     if (!click) return false;
-    var rect = e.target.getBoundingClientRect();
+    let rect = e.target.getBoundingClientRect();
     x = e.clientX - rect.left;
     y = e.clientY - rect.top;
     draw(x, y);
@@ -58,7 +58,7 @@ window.addEventListener('load', function () {
   get(canvas_id).addEventListener('mouseleave', function () {
     // マウス外遷移
     click = 0;
-    console.log('mouese leave ' + click);
+    outputLog('mouese leave ' + click);
   });
   get('pen').addEventListener('click', function () {
     // ペン
@@ -69,6 +69,26 @@ window.addEventListener('load', function () {
     // 消しゴム
     context.globalCompositeOperation = 'destination-out';
     get('nowTool').innerHTML = '消しゴム';
+  });
+  get('bold1').addEventListener('click', function () {
+    //線の太さ
+    cnvBold = '1'; 
+    get('nowBold').innerHTML = '太さ小';
+  });
+  get('bold2').addEventListener('click', function () {
+    //線の太さ
+    cnvBold = '5'; 
+    get('nowBold').innerHTML = '太さ中';
+  });
+  get('bold3').addEventListener('click', function () {
+    //線の太さ
+    cnvBold = '10'; 
+    get('nowBold').innerHTML = '太さ大';
+  });
+  get('bold4').addEventListener('click', function () {
+    //線の太さ
+    cnvBold = '40'; 
+    get('nowBold').innerHTML = '太さ極大';
   });
   get('black').addEventListener('click', function () {
     // 黒色
@@ -91,11 +111,16 @@ window.addEventListener('load', function () {
   });
   get('marge').addEventListener('click', function () {
     // 青色
-    var canvasResult = document.getElementById('canvas_result');
-    var contextResult = canvasResult.getContext('2d');
+    let canvasResult = document.getElementById('canvas_result');
+    let contextResult = canvasResult.getContext('2d');
     clearCanvas(canvasResult);
     contextResult.drawImage(canvasToImage(get('canvas_base')), 0, 0);
     contextResult.drawImage(canvasToImage(get('canvas_nurie')), 0, 0);
+  });
+  get('zoomin').addEventListener('click', function () {
+    // 青色
+    let canvasResult = document.getElementById('canvas_result');
+    scale([get('canvas_base'), get('canvas_nurie')]);
   });
 
   //描画処理
@@ -119,9 +144,8 @@ window.addEventListener('load', function () {
   }
   // 台紙
   function setBg() {
-    const canvas_id = 'canvas_base';
-    var canvas = document.getElementById(canvas_id);
-    var context = canvas.getContext('2d');
+    const canvas_base = document.getElementById('canvas_base');
+    const context_base = canvas_base.getContext('2d');
 
     const image = new Image();
     // image.src =
@@ -130,14 +154,29 @@ window.addEventListener('load', function () {
     image.addEventListener(
       'load',
       function () {
-        context.drawImage(image, 0, 0, 500, 300);
+        context_base.drawImage(image, 0, 0, 500, 300);
+      },
+      false
+    );
+  }
+  // 台紙
+  function setOverlay() {
+    const canvas_overlay = document.getElementById('canvas_overlay');
+    const context_overlay = canvas_overlay.getContext('2d');
+
+    const image = new Image();
+    image.src = './nurie_toumei.png';
+    image.addEventListener(
+      'load',
+      function () {
+        context_overlay.drawImage(image, 0, 0, 500, 300);
       },
       false
     );
   }
   // キャンバスをクリア
   function clearCanvas(canvas) {
-    var context = canvas.getContext('2d');
+    let context = canvas.getContext('2d');
     context.clearRect(0, 0, canvas.width, canvas.height);
   }
   // キャンバスをクリア
@@ -146,5 +185,14 @@ window.addEventListener('load', function () {
     image.crossOrigin = 'anonymous';
     image.src = canvas.toDataURL();
     return image;
+  }
+  function outputLog(log) {
+    get('debug_log').innerHTML = log +'<br/>' + get('debug_log').innerHTML;
+  }
+  function scale(canvasArray) {
+    canvasArray.forEach( (canvas, index) => {
+      let sclaleCtx = canvas.getContext('2d');
+      sclaleCtx.scale(10, 10);
+    });
   }
 });

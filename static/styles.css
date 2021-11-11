@@ -7,13 +7,13 @@ body {
     rgba(0, 212, 255, 1) 100%
   );
 }
-.canvas-wrap {
+#canvas-wrap {
   height: 300px;
   width: 500px;
   position: relative;
   border: 1px solid;
 }
-.canvas-wrap > canvas {
+#canvas-wrap > canvas {
   position: absolute;
 }
 #canvas_base {
@@ -21,6 +21,9 @@ body {
 }
 #canvas_nurie {
   z-index: 2;
+}
+#canvas_overlay {
+  z-index: 3;
 }
 #canvas_result {
   border: 1px solid;

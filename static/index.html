@@ -6,14 +6,23 @@
   </head>
   <body>
     <h1>塗り絵！</h1>
-    <div class="canvas-wrap">
-      <canvas id="canvas_base" height="300px" width="500px"></canvas>
+    <div id="canvas-wrap">
+      <canvas id="canvas_overlay" height="300px" width="500px"></canvas>
       <canvas id="canvas_nurie" height="300px" width="500px"></canvas>
+      <canvas id="canvas_base" height="300px" width="500px"></canvas>
     </div>
     <div style="margin: 10px">
       <label id="nowTool">ペン</label>
       <button id="pen">ペン</button>
       <button id="eraser">消しゴム</button>
+      <button id="zoomin">ズーム（左上固定）</button>
+    </div>
+    <div style="margin: 10px">
+      <label id="nowBold">太さ小</label>
+      <button id="bold1">太さ小</button>
+      <button id="bold2">太さ中</button>
+      <button id="bold3">太さ大</button>
+      <button id="bold4">太さ極大</button>
     </div>
     <div style="margin: 10px">
       <label id="nowColor">黒</label>
@@ -22,6 +31,9 @@
       <button id="blue">青</button>
     </div>
     <button id="clear">クリア</button>
+    <div style="margin-top: 10px;">[LOG-top is the latest.]</div>
+    <div id="debug_log" style="max-height: 100px; overflow-y: scroll;">
+    </div>
     <div style="margin-top: 50px">
       <button id="marge">合成</button><br />
       <canvas
